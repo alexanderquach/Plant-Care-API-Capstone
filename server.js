@@ -8,13 +8,14 @@ const passport = require('passport');
 
 const {router: usersRouter} = require('./users');
 const {router: authRouter, localStrategy, jwtStrategy} = require('./auth');
+const {router: plantsRouter} = require('./plants');
 
 mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config');
 const app = express();
-
-app.use(morgan('common'));
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -27,6 +28,11 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.static('public'));
+app.use(morgan('common'));
+
+app.use('/users', usersRouter);
+app.use('/auth', authRouter);
+app.use('/plants', plantsRouter);
 
 let server;
 

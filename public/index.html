@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Plant Care Tracker Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie-edge">
+  <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="body-container">
+    <header role="banner">
+      <div id="header-container" class="header-div">
+        <img id="header-icon" src="plant icons/010-sprout.png" alt="holding plant icon"></img>
+        <h1>Plant Care Tracker</h1>
+      </div>
+    </header>
+    
+    <main role="main">
+      <section role="region">
+        <div id="homepage-welcome" class="welcome-section">
+          <p>
+            Welcome to Plant Care Tracker!
+            New user? Sign up to keep track of your plants,
+            how to care for them, or browse other user's plants.
+          </p>
+          <img src="plant icons/035-watering-can.png" alt="watering can icon"></img>
+        </div>
+      </section>
+
+      <section role="region">
+        <div id="user-buttons">
+          <button id="new-user-button">New User</button>
+          <button id="login-button">Log In</button>
+        </div>
+      </section>
+
+      <div id="new-user-form" class="hidden">
+        <form class="new-user-form">
+          <fieldset>
+            <legend>New User Sign Up</legend>
+            <!-- <label>First Name</label>
+            <input id="first-name" type="text">
+            <label>Last Name</label>
+            <input id="last-name" type="text"> -->
+            <label for="username-new">Username</label>
+            <input id="username-new" type="text">
+            <label for="password-new">Password</label>
+            <input id="password-new" type="text">
+            <button id="new-user-submit" type="submit">Submit</button>
+          </fieldset>
+        </form>
+      </div>
+      
+      <div id="login-form" class="hidden">
+        <form class="login-form">
+          <fieldset>
+            <legend>Returning User Login</legend>
+            <label for="username-login">Username</label>
+            <input id="username-login" type="text">
+            <label for="password-login">Password</label>
+            <input id="password-login" type="text">
+            <button id="login-submit" type="submit">Log In</button>
+          </fieldset>
+        </form>
+      </div>
+    </main>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="home-script.js"></script>
+</body>
+
+</html>

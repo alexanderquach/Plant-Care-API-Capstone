@@ -2,13 +2,11 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const {User} = require('./models');
-
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
-router.post('/', jsonParser, (req, res) => {
+router.post('/signup', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -21,7 +19,7 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  const stringFields = ['username', 'password', 'firstName', 'lastName'];
+  const stringFields = ['username', 'password'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -76,10 +74,10 @@ router.post('/', jsonParser, (req, res) => {
     });
   }
 
-  let {username, password, firstName = '', lastName = ''} = req.body;
+  let {username, password} = req.body;
 
-  firstName = firstName.trim();
-  lastName = lastName.trim();
+  // firstName = firstName.trim();
+  // lastName = lastName.trim();
 
   return User.find({username})
     .count()
@@ -97,9 +95,7 @@ router.post('/', jsonParser, (req, res) => {
     .then(hash => {
       return User.create({
         username,
-        password: hash,
-        firstName,
-        lastName
+        password: hash
       });
     })
     .then(user => {
@@ -107,7 +103,7 @@ router.post('/', jsonParser, (req, res) => {
     })
     .catch(err => {
       if (err.reason === 'Validation error') {
-        return err.status(err.code).json(err);
+        return res.status(err.code).json(err);
       }
       res.status(500).json({
         code: 500,
@@ -118,8 +114,14 @@ router.post('/', jsonParser, (req, res) => {
 
 router.get('/', (req, res) => {
   return User.find()
-    .then(users => res.json(users.map(user => user.serialize)))
-    .catch(err => res.status(500).json({message: 'Internal server error'}));
+    .then(users => {
+      res.json(users.map(user => user.serialize()));
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: 'Internal server error'
+      });
+    });
 });
 
 module.exports = {router};

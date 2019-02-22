@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Plant Care Tracker Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie-edge">
+  <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="body-container">
+    <header role="banner">
+      <div id="header-container" class="header-div">
+        <img id="header-icon" src="plant icons/010-sprout.png" alt="holding plant icon"></img>
+        <h1>Plant Care Tracker</h1>
+      </div>
+    </header>
+    
+    <main role="main">
+      <section role="region">
+        <div id="dashboard-buttons">
+          <button id="user-search-button" type="button">View Users List</button>
+          <button id="message-button" type="button">Send a Message</button>
+        </div>
+      </section>
+
+      <section role="region">
+        <div id="user-plants" class="plant-container">
+          <h3 class="user-plants">My Plants</h3>
+          <ul id="plants-list"></ul>
+        </div>
+      </section>
+
+      <section role="region">
+        <div id="user-search" class="search-container hidden">
+          <h3 class="search-list">Users List</h3>
+          <ul id="users-list"></ul>
+        </div>
+      </section>
+
+      <div id="user-search-form" class="hidden">
+        <form class="user-search-form">
+          <fieldset>
+            <legend>User Search</legend>
+            <label for="user-search">Username</label>
+            <input id="user-search" type="text">
+            <button id="search-submit" type="submit">Submit</button>
+          </fieldset>
+        </form>
+      </div>
+
+      <div id="user-message-form" class="hidden">
+        <form class="user-message-form">
+          <fieldset>
+            <legend>Messages</legend>
+            <label for="recipient">Message Recipient</label>
+            <input id="recipient" type="text">
+            <label for="message">Message</label>
+            <input id="message" type="text">
+            <button id="message-submit" type="submit">Send</button>
+          </fieldset>
+        </form>
+      </div>
+
+      <div id="new-plant-form" class="hidden">
+        <form class="new-plant-form">
+          <fieldset>
+            <legend>New Plant!</legend>
+            <div id="plant-icon-container">
+              <label>Select an Icon</label>
+              <label for="icon-selector"><img src="plant-icons/021-bonsai.png" alt="bonsai icon"></label>
+              <input type="radio" name="plant-icon" id="021-bonsai" required>
+              <label for="icon-selector"><img src="plant-icons/022-plant-3.png" alt="plant 3 icon"></label>
+              <input type="radio" name="plant-icon" id="022-plant-3" required>
+              <label for="icon-selector"><img src="plant-icons/023-plant-2.png" alt="plant 2 icon"></label>
+              <input type="radio" name="plant-icon" id="023-plant-2" required>
+              <label for="icon-selector"><img src="plant-icons/024-plant-1.png" alt="plant 1 icon"></label>
+              <input type="radio" name="plant-icon" id="024-plant-1" required>
+              <label for="icon-selector"><img src="plant-icons/025-plant.png" alt="plant icon"></label>
+              <input type="radio" name="plant-icon" id="025-plant" required>
+              <label for="icon-selector"><img src="plant-icons/026-cactus-4.png" alt="cactus 4 icon"></label>
+              <input type="radio" name="plant-icon" id="026-cactus-4" required>
+              <label for="icon-selector"><img src="plant-icons/027-cactus-3.png" alt="cactus 3 icon"></label>
+              <input type="radio" name="plant-icon" id="027-cactus-3" required>
+              <label for="icon-selector"><img src="plant-icons/028-cactus-2.png" alt="cactus 2 icon"></label>
+              <input type="radio" name="plant-icon" id="028-cactus-2" required>
+              <label for="icon-selector"><img src="plant-icons/029-cactus-1.png" alt="cactus 1 icon"></label>
+              <input type="radio" name="plant-icon" id="029-cactus-1" required>
+              <label for="icon-selector"><img src="plant-icons/030-cactus.png" alt="plant icon"></label>
+              <input type="radio" name="plant-icon" id="030-plant" required>
+              <label for="icon-selector"><img src="plant-icons/036-flower-4.png" alt="flower 4 icon"></label>
+              <input type="radio" name="plant-icon" id="036-flower-4" required>
+              <label for="icon-selector"><img src="plant-icons/037-flower-3.png" alt="flower 3 icon"></label>
+              <input type="radio" name="plant-icon" id="037-flower-3" required>
+              <label for="icon-selector"><img src="plant-icons/038-flower-2.png" alt="flower 2 icon"></label>
+              <input type="radio" name="plant-icon" id="038-flower-2" required>
+              <label for="icon-selector"><img src="plant-icons/039-flower-1.png" alt="flower 1 icon"></label>
+              <input type="radio" name="plant-icon" id="039-flower-1" required>
+              <label for="icon-selector"><img src="plant-icons/040-flower.png" alt="flower icon"></label>
+              <input type="radio" name="plant-icon" id="040-flower" required>
+            </div>
+            <label for="plant-name">Plant Species/Name</label>
+            <input id="plant-name" type="text" required>
+            <label for="plant-water">Watering Requirements</label>
+            <input id="plant-water" type="text" required>
+            <label for="plant-sunlight">Sunlight Requirements</label>
+            <input id="plant-sunlight" type="text" required>
+            <label for="plant-notes">Notes</label>
+            <input id="plant-notes" type="text">
+            <button id="new-plant-submit" type="submit">Submit</button>
+          </fieldset>
+        </form>
+      </div>
+
+      <div id="edit-plant-form" class="hidden">
+          <form class="edit-plant-form">
+            <fieldset>
+              <legend>Update Your Plant!</legend>
+              <label for="edit-plant-name">Plant Species/Name</label>
+              <input id="edit-plant-name" type="text">
+              <label for="edit-plant-water">Watering Requirements</label>
+              <input id="edit-plant-water" type="text">
+              <label for="edit-plant-sunlight">Sunlight Requirements</label>
+              <input id="edit-plant-sunlight" type="text">
+              <label for="edit-plant-notes">Notes</label>
+              <input id="edit-plant-notes" type="text">
+              <button id="edit-new-plant-submit" type="submit">Save</button>
+              <button id="delete-plant" type="button">Delete</button>
+            </fieldset>
+          </form>
+        </div>    
+
+    </main>
+  </div> 
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="dash-script.js"></script>
+</body>
+
+</html>
