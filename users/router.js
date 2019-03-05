@@ -2,9 +2,11 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const {User} = require('./models');
+const {User, Message} = require('./models');
 const router = express.Router();
 const jsonParser = bodyParser.json();
+const passport = require('passport');
+const jwtAuth = passport.authenticate('jwt', {session: false});
 
 router.post('/signup', jsonParser, (req, res) => {
   const requiredFields = ['username', 'password'];
@@ -122,6 +124,59 @@ router.get('/', (req, res) => {
         message: 'Internal server error'
       });
     });
+});
+
+router.get('/:username', (req, res) => {
+  return User.findOne({username: req.params.username})
+    .then(user => {
+      res.status(200).json(user.serialize())
+    })
+    .catch(err => {
+      res.status(500).json({
+        message: 'Unable to find user'
+      });
+    });
+});
+
+router.get('/messages/:username', jwtAuth, (req, res) => {
+  return Message.find({recipient: req.user.username})
+  .then(messages => {
+    return res.status(200).json(messages.map(message => message.serialize()));
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: 'Internal server error'
+    });
+  });
+});
+
+router.post('/messages', jsonParser, jwtAuth, (req, res) => {
+  const requiredFields = ['messageBody', 'recipient'];
+  const missingField = requiredFields.find(field => !(field in req.body));
+
+  if (missingField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'Validation error',
+      message: 'Missing field',
+      location: missingField
+    });
+  }
+
+  return Message.create({
+    username: req.user.username,
+    messageBody: req.body.messageBody,
+    recipient: req.body.recipient
+  })
+  .then(message => {
+    return res.status(201).json(message);
+  })
+  .catch(err => {
+    res.status(500).json({
+      code: 500,
+      message: 'Internal server error'
+    })
+  })
 });
 
 module.exports = {router};

@@ -66,9 +66,10 @@ function createNewUser(username, password) {
   })
 };
 
-function populateStorage(authToken) {
+function populateStorage(authToken, username) {
   // Saves JWT to localStorage
-  localStorage.setItem('authToken', authToken)
+  localStorage.setItem('authToken', authToken);
+  localStorage.setItem('username', username);
 };
 
 function userLogin(username, password) {
@@ -92,12 +93,36 @@ function userLogin(username, password) {
   })
   .then(responseJson => {
     console.log(responseJson);
-    populateStorage(responseJson.authToken);
+    populateStorage(responseJson.authToken, username);
     hideHome();
     window.location.href = '/dashboard.html'
   })
   .catch(error => {
     console.log(error.message);
+  })
+};
+
+function userRefresh() {
+  // Refreshes user web token
+  const authToken = localStorage.getItem('authToken');
+  fetch('/auth/refresh', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error(response.statusText);
+  })
+  .then(responseJson => {
+    populateStorage(responseJson.authToken);
+  })
+  .catch(error => {
+    console.log(error.message)
   })
 };
 
@@ -111,7 +136,7 @@ function handleNewUser() {
 };
 
 function handleNewSubmit() {
-  $('#new-user-submit').on('click', function(event) {
+  $('#new-user-form').on('submit', function(event) {
     event.preventDefault();
     const username = $(this).find('#username-new').val();
     const password = $(this).find('#password-new').val();
@@ -127,11 +152,18 @@ function handleLogin() {
 };
 
 function handleLoginSubmit() {
-  $('#login-submit').on('click', function(event) {
+  $('#login-form').on('submit', function(event) {
     event.preventDefault();
     const username = $(this).find('#username-login').val();
     const password = $(this).find('#password-login').val();
     userLogin(username, password);
+  });
+};
+
+function handleUserRefresh() {
+  $('#refresh-button').on('click', function(event) {
+    event.preventDefault();
+    userRefresh();
   });
 };
 
@@ -144,4 +176,5 @@ $(function() {
   handleNewSubmit();
   handleLogin();
   handleLoginSubmit();
+  handleUserRefresh();
 });

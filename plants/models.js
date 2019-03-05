@@ -19,7 +19,8 @@ plantSchema.methods.serialize = function() {
     name: this.name,
     wateringRequirements: this.wateringRequirements,
     sunlightRequirements: this.sunlightRequirements,
-    notes: this.notes
+    notes: this.notes,
+    username: this.username
   };
 };
 

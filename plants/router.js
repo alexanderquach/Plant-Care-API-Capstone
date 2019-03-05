@@ -9,11 +9,11 @@ const jsonParser = bodyParser.json();
 const passport = require('passport');
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
-router.get('/', jwtAuth, (req, res) => {
+router.get('/allPlants', jwtAuth, (req, res) => {
   // console.log(req.user.username);
   User.findOne({username: req.user.username})
   .then(user => {
-    return Plant.find()
+    return Plant.find({username: req.user.username})
       .then(plants => {
         res.json(plants)
       });
@@ -25,9 +25,36 @@ router.get('/', jwtAuth, (req, res) => {
   });
 });
 
+router.get('/:id', jwtAuth, (req, res) => {
+  console.log(req.params.id);
+  Plant.findById(req.params.id)
+  .then(plant => {
+    return res.json(plant)
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: 'Internal server error'
+    });
+  });
+});
+
+router.get('/searchedUserPlants', (req, res) => {
+  console.log(req, 'Random');
+  Plant.find({username: req.user.username})
+  .then(plants => {
+    res.json(plants)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({
+      message: 'Internal server error'
+    });
+  });
+});
+
 router.post('/new', jsonParser, jwtAuth, (req, res) => {
   // console.log(req.user);
-  const requiredFields = ['name', 'wateringRequirements', 'sunlightRequirements'];
+  const requiredFields = ['icon', 'name', 'wateringRequirements', 'sunlightRequirements'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
   if (missingField) {
@@ -39,7 +66,7 @@ router.post('/new', jsonParser, jwtAuth, (req, res) => {
     });
   }
 
-  const stringFields = ['name', 'wateringRequirements', 'sunlightRequirements'];
+  const stringFields = ['icon', 'name', 'wateringRequirements', 'sunlightRequirements'];
   const nonStringField = stringFields.find(
     field => field in req.body && typeof req.body[field] !== 'string'
   );
@@ -52,14 +79,14 @@ router.post('/new', jsonParser, jwtAuth, (req, res) => {
     });
   }
 
-  let {name, wateringRequirements, sunlightRequirements} = req.body;
+  let {icon, name, wateringRequirements, sunlightRequirements, username} = req.body;
 
   name = name.trim();
 
-  return Plant.find({name})
+  return Plant.find({username, name})
     .count()
     .then(count => {
-      if (count > 0) {
+      if (username === req.body.username && count > 0) {
         return Promise.reject({
           code: 422,
           reason: 'Validation error',
@@ -67,6 +94,7 @@ router.post('/new', jsonParser, jwtAuth, (req, res) => {
           location: 'name'
         });
       }
+      console.log(req.user);
       return Plant.create({
         icon: req.body.icon,
         name: req.body.name,
@@ -92,14 +120,15 @@ router.post('/new', jsonParser, jwtAuth, (req, res) => {
 });
 
 router.put('/:id', jsonParser, jwtAuth, (req, res) => {
-  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-    res.status(400).json({
-      error: 'Request path id and request body id values must match'
-    });
-  }
+  // console.log(req.params.id, req.body.id);
+  // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+  //   res.status(400).json({
+  //     error: 'Request path id and request body id values must match'
+  //   });
+  // }
   
   const updated = {};
-  const updateableFields = ['name', 'wateringRequirements', 'sunlightRequirements', 'notes'];
+  const updateableFields = ['icon', 'name', 'wateringRequirements', 'sunlightRequirements', 'notes'];
   updateableFields.forEach(field => {
     if(field in req.body) {
       updated[field] = req.body[field];
@@ -110,10 +139,11 @@ router.put('/:id', jsonParser, jwtAuth, (req, res) => {
   .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
   .then(updatedPlant => {
     res.status(200).json({
+      icon: `${updatedPlant.icon}`,
       name: `${updatedPlant.name}`,
       wateringRequirements: `${updatedPlant.wateringRequirements}`,
       sunlightRequirements: `${updatedPlant.sunlightRequirements}`,
-      notes: `${updatedPlant.notes}`
+      notes: `${updatedPlant.notes}`,
     });
   })
   .catch(err => {

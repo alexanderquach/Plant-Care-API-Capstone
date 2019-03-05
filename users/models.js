@@ -27,6 +27,27 @@ UserSchema.methods.serialize = function() {
   };
 };
 
+const MessageSchema = mongoose.Schema({
+  username: {
+    type: String,
+  },
+  messageBody: {
+    type: String,
+    required: true
+  },
+  recipient: {
+    type: String,
+    required: true
+  }
+});
+
+MessageSchema.methods.serialize = function() {
+  return {
+    username: this.username,
+    message: this.messageBody
+  };
+};
+
 UserSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
@@ -36,5 +57,6 @@ UserSchema.statics.hashPassword = function(password) {
 };
 
 const User = mongoose.model('User', UserSchema);
+const Message = mongoose.model('Message', MessageSchema);
 
-module.exports = {User};
+module.exports = {User, Message};
