@@ -160,10 +160,9 @@ function handleLoginSubmit() {
   });
 };
 
-function handleUserRefresh() {
-  $('#refresh-button').on('click', function(event) {
-    event.preventDefault();
-    userRefresh();
+function handleBackButton() {
+  $(document).on('click', '.back-button', function() {
+    showHomepage();
   });
 };
 
@@ -176,5 +175,5 @@ $(function() {
   handleNewSubmit();
   handleLogin();
   handleLoginSubmit();
-  handleUserRefresh();
+  handleBackButton();
 });

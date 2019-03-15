@@ -25,6 +25,20 @@ router.get('/allPlants', jwtAuth, (req, res) => {
   });
 });
 
+router.get('/searchedUserPlants/:username', jwtAuth, (req, res) => {
+  console.log(req, 'Random');
+  Plant.find({username: req.params.username})
+  .then(plants => {
+    res.json(plants)
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({
+      message: 'Internal server error'
+    });
+  });
+});
+
 router.get('/:id', jwtAuth, (req, res) => {
   console.log(req.params.id);
   Plant.findById(req.params.id)
@@ -38,19 +52,6 @@ router.get('/:id', jwtAuth, (req, res) => {
   });
 });
 
-router.get('/searchedUserPlants', (req, res) => {
-  console.log(req, 'Random');
-  Plant.find({username: req.user.username})
-  .then(plants => {
-    res.json(plants)
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json({
-      message: 'Internal server error'
-    });
-  });
-});
 
 router.post('/new', jsonParser, jwtAuth, (req, res) => {
   // console.log(req.user);

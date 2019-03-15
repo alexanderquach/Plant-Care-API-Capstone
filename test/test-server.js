@@ -2,7 +2,10 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const app = require('../server');
+const {app, runServer, closerServer} = require('../server');
+const {router: usersRouter} = require('../users');
+const {router: authRouter} = require('../auth');
+const {router: plantsRouter} = require('../plants');
 
 const expect = chai.expect;
 

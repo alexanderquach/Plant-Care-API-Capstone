@@ -13,6 +13,9 @@ function showDashboard() {
   $('#edit-plant-form').hide();
   $('#user-message-form').hide();
   $('#search-list').hide();
+  $('#user-messages').show();
+  $('#plants-list').empty();
+  getPlants();
 };
 
 function showNewPlantPost() {
@@ -24,6 +27,7 @@ function showNewPlantPost() {
   $('#edit-plant-form').hide();
   $('#user-message-form').hide();
   $('#search-list').hide();
+  $('#user-messages').hide();
 };
 
 function showEditPlantPost() {
@@ -35,12 +39,11 @@ function showEditPlantPost() {
   $('#edit-plant-form').show();
   $('#user-message-form').hide();
   $('#search-list').hide();
+  $('#user-messages').hide();
 };
 
 function showAllUsers() {
   // Displays list of all users
-  $('#dashboard-buttons').hide();
-  $('#user-plants').hide();
   $('#user-search-form').hide();
   $('#new-plant-form').hide();
   $('#edit-plant-form').hide();
@@ -50,8 +53,6 @@ function showAllUsers() {
 
 function showUserSearch() {
   // Search list of users
-  $('#dashboard-buttons').hide();
-  $('#user-plants').hide();
   $('#user-search-form').show();
   $('#new-plant-form').hide();
   $('#edit-plant-form').hide();
@@ -61,8 +62,6 @@ function showUserSearch() {
 
 function showMessaging() {
   // Displays user message form
-  $('#dashboard-buttons').hide();
-  $('#user-plants').hide();
   $('#user-search-form').hide();
   $('#new-plant-form').hide();
   $('#edit-plant-form').hide();
@@ -109,18 +108,19 @@ function getPlants() {
 function displayPlants(plants) {
   // Displays plants in dashboard
   console.log(plants);
-  // $('#plant-list').empty();
   for (let i = 0; i < plants.length; i++) {
     $('#plants-list').append(
       `<li class="individual-plant">
-        <button class="plant-name" type="button">${plants[i].name}</button>
+        <button class="plant-name button" type="button">
+          <img class="display-icon icon" src="plant-icons/${plants[i].icon}.png" alt="${plants[i].icon}">
+        </button>
         <div class="plant-info hidden">
-          <button class="edit-plant" data-id="${plants[i]._id}" type="button">Modify</button>
-          <button class="delete-plant" type="button">Delete</button>
-          <img class="display-icon" src="plant-icons/${plants[i].icon}.png" alt="${plants[i].icon}">
+          <p>Plant Species/Name: ${plants[i].name} <button class="plant-info-back" type="button">&times;</button></p>
           <p class="display-water">Watering Requirements: ${plants[i].wateringRequirements}</p>
           <p class="display-sunlight">Sunlight Requirements: ${plants[i].sunlightRequirements}</p>
           <p class="display-notes">Notes: ${plants[i].notes}</p>
+          <button class="edit-plant button" data-id="${plants[i]._id}" type="button">Modify</button>
+          <button class="delete-plant button" type="button">Delete</button>
         </div>
       </li>`
     )
@@ -146,8 +146,6 @@ function postNewPlant(plantInfo) {
   .then(responseJson => {
     console.log(responseJson);
     showDashboard();
-    $('#plants-list').empty();
-    getPlants();
   })
   .catch(error => {
     console.log(error.message);
@@ -199,8 +197,8 @@ function editPlant(plantData, id) {
   .then(responseJson => {
     console.log('Plant has been updated');
     showDashboard();
-    $('#plants-list').empty()
-    getPlants();
+    // $('#plants-list').empty()
+    // getPlants();
   })
   .catch(error => {
     console.log(error.message);
@@ -228,8 +226,8 @@ function deletePlant(id) {
     if (response.ok) {
       console.log('Plant deleted');
       showDashboard();
-      $('#plants-list').empty();
-      getPlants();
+      // $('#plants-list').empty();
+      // getPlants();
     }
     throw new Error(response.statusText)
   })
@@ -296,7 +294,7 @@ function displayUsersList(users) {
   for (let i = 0; i < users.length; i++) {
     $('#users-list').append(
       `<li>
-        <button class="searched-user-name" data-username="${users[i].username}" type="button">${users[i].username}</button>
+        <button class="searched-user-name button" data-username="${users[i].username}" type="button">${users[i].username}</button>
         <ul class="searched-user-plants hidden" data-username="${users[i].username}"></ul>
       </li>`
     )
@@ -308,7 +306,7 @@ function displaySearchedUser(user) {
   $('#users-list').empty();
   $('#users-list').append(
     `<li>
-        <button class="searched-user-name" data-username="${user.username}" type="button">${user.username}</button>
+        <button class="searched-user-name button" data-username="${user.username}" type="button">${user.username}</button>
         <ul class="searched-user-plants hidden" data-username="${user.username}"></ul>
       </li>`
   );
@@ -317,7 +315,7 @@ function displaySearchedUser(user) {
 function searchedUserPlants(username) {
   // Populates plants of a searched user or all users
   console.log(username);
-  fetch('/plants/searchedUserPlants', {
+  fetch(`/plants/searchedUserPlants/${username}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -331,7 +329,6 @@ function searchedUserPlants(username) {
     throw new Error(response.statusText)
   })
   .then(responseJson => {
-    console.log('Searched user plants' + responseJson);
     displaySearchedUserPlants(responseJson, username);
   })
   .catch(error => {
@@ -342,12 +339,15 @@ function searchedUserPlants(username) {
 function displaySearchedUserPlants(searchedPlants, username) {
   // Displays plants of searched users
   console.log(searchedPlants);
+  $('.searched-user-plants').empty();
   for (let i = 0; i < searchedPlants.length; i++) {
     $(`.searched-user-plants[data-username='${username}']`).append(
       `<li>
-        <button class="plant-name" type="button">${searchedPlants[i].name}</button>
+        <button class="plant-name button" type="button">
+          <img src="plant-icons/${searchedPlants[i].icon}.png" alt="${searchedPlants[i].icon}" class="icon">
+        </button>
         <div class="plant-info hidden">
-          <img src="plant-icons/${searchedPlants[i].icon}.png" alt="${searchedPlants[i].icon}">
+          <p>Plant Species/Name: ${searchedPlants[i].name}</p>
           <p>Watering Requirements: ${searchedPlants[i].wateringRequirements}</p>
           <p>Sunlight Requirements: ${searchedPlants[i].sunlightRequirements}</p>
           <p>Notes: ${searchedPlants[i].notes}</p>
@@ -376,8 +376,8 @@ function messageUsers(message) {
   .then(responseJson => {
     console.log(`Message sent to ${message.recipient}`);
     showDashboard();
-    $('#plants-list').empty();
-    getPlants();
+    // $('#plants-list').empty();
+    // getPlants();
   })
   .catch(error => {
     console.log(error.message);
@@ -424,6 +424,12 @@ function displayUserMessages(messages) {
 
 // Event handlers ------------------------------------------------------------------
 
+function handleMenu() {
+  $('#menu-button').on('click', function() {
+    $(this).siblings('button').toggle();
+  });
+};
+
 function handleNewPlantSubmit() {
   // Handles new plant submission
   $('#new-plant').on('click', function(event) {
@@ -441,7 +447,7 @@ function handleNewPlantSubmit() {
       icon, name, wateringRequirements, sunlightRequirements, notes
     };
     postNewPlant(plantInfo);
-    getPlants();
+    // getPlants();
   });
 };
 
@@ -456,10 +462,13 @@ function handleViewPlant() {
 function handleBackButton() {
   // Handles 'back' button click
   $(document).on('click', '.back-button', function() {
-    console.log('Back')
     showDashboard();
-    $('#plants-list').empty();
-    getPlants();
+  })
+}
+
+function handlePlantInfoBack() {
+  $(document).on('click', '.plant-info-back', function() {
+    $(this).parents('.plant-info').toggle();
   })
 }
 
@@ -554,9 +563,10 @@ function handleLogout() {
 $(function() {
   console.log('Welcome to your dashboard');
   showDashboard();
-  getPlants();
+  handleMenu();
   getMessages();
   handleBackButton();
+  handlePlantInfoBack();
   handleNewPlantSubmit();
   handleViewPlant();
   handleEditPlantSubmit();

@@ -1,4 +1,246 @@
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 .hidden {
   display: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #c6ffb3;
+}
+
+header {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.home-container {
+  max-width: 1200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#header-icon {
+  width: 30vw;
+  margin: 1rem;
+  position: fixed;
+  z-index: -1;
+}
+
+h1.page-title {
+  font-size: 2.5em;
+  padding: 1rem 0.5rem;
+  margin: auto 0;
+  text-align: center;
+  z-index: 0;
+}
+
+h1.dash-title {
+  font-size: 2.5em;
+  padding: 1rem 0.5rem;
+  margin: auto 0;
+  text-align: left;
+  z-index: 0;
+}
+
+#homepage-welcome {
+  margin: 3rem auto;
+  max-width: 400px;
+}
+
+#welcome-text {
+  font-size: 1em;
+  text-align: center;
+}
+
+#welcome-icon {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}
+
+#user-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.button {
+  border: 2px solid #999999;
+  color: black;
+  padding: 0.75rem 1.25rem;
+  font-size: 1em;
+  border-radius: 5px;
+  background-color: #ffb399;
+}
+
+.back-button {
+  position: absolute;
+  top: 0;
+  right: 0.75rem;
+  border: 1px solid black;
+  color: black;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.plant-info-back {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  border: 1px solid #999999;
+  color: black;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#new-user-button, #login-button {
+  margin: 1.25rem 0;
+}
+
+#new-user-form, #login-form {
+  margin: 3rem 0;
+  position: relative;
+}
+
+fieldset {
+  border: 0;
+  position: relative;
+}
+
+legend {
+  text-align: center;
+}
+
+input[type=text] {
+  display: block;
+  width: 90%;
+  padding: 0.5rem 0;
+  margin: 0.5rem;
+  text-align: center;
+  border-radius: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0.5rem;
+}
+
+#new-user-submit, #login-submit {
+  display: block;
+  margin: 1rem auto;
+  background-color: #99d6ff;
+}
+
+.icon {
+  width: 60px;
+}
+
+#menu-button {
+  position: absolute;
+  right: 0;
+  background-color: #99b3ff;
+  width: 60px;
+}
+
+#dashboard-buttons {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  right: 0;
+}
+
+#user-search-button, #user-list-button, #message-button, #logout-button {
+  width: 30vw;
+  margin: 0.1rem;
+  background-color: rgba(153, 179, 255, 0.3);
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+h3.user-plants-header {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+#new-plant {
+  margin: 0 auto;
+}
+
+#user-plants {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#plants-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  position: relative;
+}
+
+.plant-info {
+  width: 90%;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 4%;
+  background-color: #ffff99;
+  border: 2px solid #a6a6a6;
+  border-radius: 5px;
+  padding: 0.25rem;
+}
+
+#user-functions {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.user-message-header {
+  font-size: 1.25em;
+}
+
+#user-messages, #search-list, #user-search-form, #user-message-form {
+  background-color: #f2f2f2;
+  text-align: center;
+  padding: 1rem;
+  border: 2px solid #999999;
+  border-radius: 5px;
+  margin: 1rem;
+}
+
+.searched-user-name {
+  background-color: #cc99ff;
+}
+
+h3.search-list {
+  position: relative;
+}
+
+#users-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0.5rem;
+}
+
+.user-search-form legend {
+  font-size: 1.25em;
+}
+
+.user-message-form legend {
+  font-size: 1.25em;
 }
 

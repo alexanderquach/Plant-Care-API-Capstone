@@ -1,0 +1,9 @@
+language: node_js
+node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: kscOh9PIrD+WuTob1vV2lhK1pvUbFbok7Xo/dr8/6GrkYIJQrQeS/ivL0AEbNwOA0Tje3GdOAU64LevSS5RrprRBLL3kH1ntMQRhvUvRg5I8e9gNqyOcX79SoYVG1DZ4k0PHdYY22q+JGKFxaYhtLvGbmohcretDQwzFGdCLOcA3UkuXn94MC/dsFjoGh6bW36vlABUJ2+2tV0GLcni7P11aKnnMtUIjw3KNpOFyo2MmRXZUdeq6AbdaH7xaqETBzvWCWAQPkv/ihLO0ot9SZc2BIH6U2vUw4Uk+itZ2fj5uLPr6fOt2GktXN3PqzFqeDydKjKazBCiWpLxTPC2ygHwUqX54ouqgRYoNMEzqzkpiLkiUeatEvNJu3si9CWaDJ4VtMSq88njFQR/hnlPVCfzutvgUWDsqKo+NLWyz529uUhf5M7pBjXUF+hwi/z4lI/rbX4KkqkaUy1kv9BFjKdaGkuRXpFl3V3hkE250cj9j1ojgpPYrnAkmdYUuLlU3qlLBQd8fcBKuIeYUaINfVr5MjMO3pW2Z/EHUe/7AZhm/XsyOiehGBobTvl76FVlHlP65zZU8NlJCwD86mB93dEv/0T46OMFWKq/4tgW2UGTEWbpXeXO9AZnwh2fVscozfBe3pFDtsoNd1rXNKDjuNNf0yeUCF/ThU/g544iGdvY=
+  app: aqueous-shelf-51818
+  on:
+    repo: alexanderquach/Plant-Care-API-Capstone

@@ -4,40 +4,41 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Plant Care Tracker Home</title>
+  <title>Plantcare Tracker Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie-edge">
   <link href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
 </head>
 
 <body>
-  <div class="body-container">
-    <header role="banner">
-      <div id="header-container" class="header-div">
+  <div class="home-container">
+    <header role="banner" id="header-container" >
+      <div class="header-div">
         <img id="header-icon" src="plant-icons/010-sprout.png" alt="holding plant icon"></img>
-        <h1>Plant Care Tracker</h1>
+        <h1 class="page-title">Plantcare Tracker</h1>
       </div>
     </header>
     
-    <main role="main">
-      <section role="region">
-        <div id="homepage-welcome" class="welcome-section">
-          <p>
-            Welcome to Plant Care Tracker!
-            New user? Sign up to keep track of your plants,
-            how to care for them, or browse other user's plants.
+    <main role="main" id="main-container">
+      <section role="region" id="homepage-welcome">
+        <div class="welcome-section">
+          <p id="welcome-text">
+            Welcome to Plantcare Tracker!<br>
+            New user? Sign up below!<br>
+            Keep track of your plants,
+            how to care for them,
+            or browse other user's plants.
           </p>
-          <img src="plant-icons/035-watering-can.png" alt="watering can icon"></img>
+          <img id="welcome-icon" src="plant-icons/035-watering-can.png" alt="watering can icon"></img>
         </div>
       </section>
 
       <section role="region">
         <div id="user-buttons">
-          <button id="new-user-button">New User</button>
-          <button id="login-button">Log In</button>
-          <p>Log in failed? Hit the Refresh button!</p>
-          <button id="refresh-button">Refresh</button>
+          <button id="new-user-button" class="button">New User</button>
+          <button id="login-button" class="button">Log In</button>
         </div>
       </section>
 
@@ -45,15 +46,12 @@
         <form class="new-user-form">
           <fieldset>
             <legend>New User Sign Up</legend>
-            <!-- <label>First Name</label>
-            <input id="first-name" type="text">
-            <label>Last Name</label>
-            <input id="last-name" type="text"> -->
+            <button class="back-button" type="button">&times;</button>
             <label for="username-new">Username</label>
-            <input id="username-new" type="text">
+            <input id="username-new" type="text" placeholder="Enter a username" required>
             <label for="password-new">Password</label>
-            <input id="password-new" type="text">
-            <button id="new-user-submit" type="submit">Submit</button>
+            <input id="password-new" type="text" placeholder="Enter a password" required>
+            <button id="new-user-submit" type="submit" class="button">Submit</button>
           </fieldset>
         </form>
       </div>
@@ -62,11 +60,12 @@
         <form class="login-form">
           <fieldset>
             <legend>Returning User Login</legend>
+            <button class="back-button" type="button">&times;</button>
             <label for="username-login">Username</label>
-            <input id="username-login" type="text">
+            <input id="username-login" type="text" placeholder="Your username" required>
             <label for="password-login">Password</label>
-            <input id="password-login" type="text">
-            <button id="login-submit" type="submit">Log In</button>
+            <input id="password-login" type="text" placeholder="Your password" required>
+            <button id="login-submit" type="submit" class="button">Log In</button>
           </fieldset>
         </form>
       </div>
