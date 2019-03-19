@@ -1,0 +1,40 @@
+{
+  "username": "username1",
+  "message": "test message 1",
+  "recipient": "username2"
+}
+{
+  "username": "username2",
+  "message": "test message 2",
+  "recipient": "username3"
+}
+{
+  "username": "username3",
+  "message": "test message 3",
+  "recipient": "username4"
+}
+{
+  "username": "username4",
+  "message": "test message 4",
+  "recipient": "username1"
+}
+{
+  "username": "username1",
+  "message": "test message 5",
+  "recipient": "username3"
+}
+{
+  "username": "username2",
+  "message": "test message 6",
+  "recipient": "username4"
+}
+{
+  "username": "username3",
+  "message": "test message 7",
+  "recipient": "username1"
+}
+{
+  "username": "username4",
+  "message": "test message 8",
+  "recipient": "username2"
+}

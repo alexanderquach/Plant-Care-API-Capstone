@@ -1,0 +1,50 @@
+{
+  "_id": "000000000000000000000001",
+  "icon": "021-bonsai",
+  "name": "Bonsai",
+  "wateringRequirements": "Plenty of water",
+  "sunlightRequirements": "Plenty of sunlight",
+  "notes": "Prune as desired",
+  "username": "username1",
+  "__v": 0
+}
+{
+  "_id": "000000000000000000000002",
+  "icon": "026-cactus-4",
+  "name": "Succulent",
+  "wateringRequirements": "Very infrequently",
+  "sunlightRequirements": "Moderate sunlight",
+  "notes": "Does well in lower light conditions or brighter light conditions",
+  "username": "username4",
+  "__v": 0
+}
+{
+  "_id": "000000000000000000000003",
+  "icon": "036-flower-4",
+  "name": "Flower",
+  "wateringRequirements": "Water frequently, when dry",
+  "sunlightRequirements": "Bright sunlight",
+  "notes": "Food during flowering months",
+  "username": "username3",
+  "__v": 0
+}
+{
+  "_id": "000000000000000000000004",
+  "icon": "025-plant",
+  "name": "Zz Plant",
+  "wateringRequirements": "Moderate water",
+  "sunlightRequirements": "Moderate sunlight",
+  "notes": "",
+  "username": "username2",
+  "__v": 0
+}
+{
+  "_id": "000000000000000000000006",
+  "icon": "038-flower-2",
+  "name": "Flower 2",
+  "wateringRequirements": "Water often",
+  "sunlightRequirements": "Plenty of sunlight",
+  "notes": "Fertilize during growing months",
+  "username": "username1",
+  "__v": 0
+}

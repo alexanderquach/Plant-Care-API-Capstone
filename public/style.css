@@ -43,7 +43,7 @@ h1.dash-title {
   font-size: 2.5em;
   padding: 1rem 0.5rem;
   margin: auto 0;
-  text-align: left;
+  text-align: right;
   z-index: 0;
 }
 
@@ -141,30 +141,17 @@ ul {
   width: 60px;
 }
 
-#menu-button {
-  position: absolute;
-  right: 0;
-  background-color: #99b3ff;
-  width: 60px;
-}
-
 #dashboard-buttons {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   position: relative;
   right: 0;
 }
 
 #user-search-button, #user-list-button, #message-button, #logout-button {
-  width: 30vw;
+  width: 48vw;
   margin: 0.1rem;
   background-color: rgba(153, 179, 255, 0.3);
-}
-
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
 }
 
 h3.user-plants-header {
@@ -185,9 +172,9 @@ h3.user-plants-header {
 }
 
 #plants-list {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
   position: relative;
 }
 
@@ -230,10 +217,10 @@ h3.search-list {
 }
 
 #users-list {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  position: relative;
 }
 
 .user-search-form legend {
@@ -244,3 +231,59 @@ h3.search-list {
   font-size: 1.25em;
 }
 
+@media only screen and (min-width: 768px) {
+  #user-search-button, #user-list-button, #message-button, #logout-button {
+    width: 24.5vw;
+    margin: 0.1rem;
+    background-color: rgba(153, 179, 255, 0.3);
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .body-container {
+    display: grid;
+    grid-template-columns: repeat(10, 10%);
+    grid-template-rows: repeat(10, 1fr);
+  }
+
+  .dash-header {
+    grid-area: 1/1/2/11;
+  }
+
+  .dash-main {
+    grid-area: 2/1/11/11;
+    display: grid;
+    grid-template-columns: repeat(10, 10%);
+    grid-template-rows: repeat(8, 12.5%);
+  }
+  
+  .button-section {
+    grid-area: 1/1/2/11;
+  }
+
+  #plant-section {
+    grid-area: 2/1/11/8;
+  }
+
+  #plants-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    position: relative;
+  }
+
+  #user-functions {
+    grid-area: 2/8/11/12;
+  }
+
+  #new-plant-form, #edit-plant-form {
+    grid-area: 2/2/9/10;
+  }
+
+  #users-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    position: relative;
+  }
+}

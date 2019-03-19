@@ -40,7 +40,6 @@ function hideHome() {
 
 function createNewUser(username, password) {
   // Creates a new user
-  // console.log(username, password);
   const userInput = {
     username, password
   };
@@ -74,7 +73,6 @@ function populateStorage(authToken, username) {
 
 function userLogin(username, password) {
   // Logs in the user
-  // console.log(username, password);
   const userInput = {
     username, password
   };

@@ -107,7 +107,6 @@ function getPlants() {
 
 function displayPlants(plants) {
   // Displays plants in dashboard
-  console.log(plants);
   for (let i = 0; i < plants.length; i++) {
     $('#plants-list').append(
       `<li class="individual-plant">
@@ -154,7 +153,6 @@ function postNewPlant(plantInfo) {
 
 function getEditPlant(id) {
   // Finds desired plant info for editing
-  console.log(id);
   fetch(`/plants/${id}`, {
     method: 'GET',
     headers: {
@@ -169,7 +167,6 @@ function getEditPlant(id) {
     throw new Error(response.statusText)
   })
   .then(responseJson => {
-    console.log(responseJson);
     showEditPlantPost();
     populateEditPlant(responseJson, id);
   })
@@ -197,8 +194,6 @@ function editPlant(plantData, id) {
   .then(responseJson => {
     console.log('Plant has been updated');
     showDashboard();
-    // $('#plants-list').empty()
-    // getPlants();
   })
   .catch(error => {
     console.log(error.message);
@@ -226,8 +221,6 @@ function deletePlant(id) {
     if (response.ok) {
       console.log('Plant deleted');
       showDashboard();
-      // $('#plants-list').empty();
-      // getPlants();
     }
     throw new Error(response.statusText)
   })
@@ -253,7 +246,6 @@ function allUsersList() {
     throw new Error(response.statusText);
   })
   .then(responseJson => {
-    // console.log(responseJson);
     showAllUsers();
     displayUsersList(responseJson);
   })
@@ -278,7 +270,6 @@ function searchUsers(username) {
     throw new Error(response.statusText)
   })
   .then(responseJson => {
-    console.log(responseJson);
     showAllUsers();
     displaySearchedUser(responseJson);
   })
@@ -289,7 +280,6 @@ function searchUsers(username) {
 
 function displayUsersList(users) {
   // Displays all users
-  console.log(users);
   $('#users-list').empty();
   for (let i = 0; i < users.length; i++) {
     $('#users-list').append(
@@ -314,7 +304,6 @@ function displaySearchedUser(user) {
 
 function searchedUserPlants(username) {
   // Populates plants of a searched user or all users
-  console.log(username);
   fetch(`/plants/searchedUserPlants/${username}`, {
     method: 'GET',
     headers: {
@@ -338,21 +327,10 @@ function searchedUserPlants(username) {
 
 function displaySearchedUserPlants(searchedPlants, username) {
   // Displays plants of searched users
-  console.log(searchedPlants);
   $('.searched-user-plants').empty();
   for (let i = 0; i < searchedPlants.length; i++) {
     $(`.searched-user-plants[data-username='${username}']`).append(
-      `<li>
-        <button class="plant-name button" type="button">
-          <img src="plant-icons/${searchedPlants[i].icon}.png" alt="${searchedPlants[i].icon}" class="icon">
-        </button>
-        <div class="plant-info hidden">
-          <p>Plant Species/Name: ${searchedPlants[i].name}</p>
-          <p>Watering Requirements: ${searchedPlants[i].wateringRequirements}</p>
-          <p>Sunlight Requirements: ${searchedPlants[i].sunlightRequirements}</p>
-          <p>Notes: ${searchedPlants[i].notes}</p>
-        </div>
-      </li>`
+      `<li>${searchedPlants[i].name}</li>`
     )
   };
 };
@@ -376,8 +354,6 @@ function messageUsers(message) {
   .then(responseJson => {
     console.log(`Message sent to ${message.recipient}`);
     showDashboard();
-    // $('#plants-list').empty();
-    // getPlants();
   })
   .catch(error => {
     console.log(error.message);
@@ -401,7 +377,7 @@ function getMessages() {
     throw new Error(response.statusText);
   })
   .then(responseJson => {
-    console.log(responseJson);
+    // console.log(responseJson);
     displayUserMessages(responseJson)
   })
   .catch(error => {
@@ -424,12 +400,6 @@ function displayUserMessages(messages) {
 
 // Event handlers ------------------------------------------------------------------
 
-function handleMenu() {
-  $('#menu-button').on('click', function() {
-    $(this).siblings('button').toggle();
-  });
-};
-
 function handleNewPlantSubmit() {
   // Handles new plant submission
   $('#new-plant').on('click', function(event) {
@@ -447,14 +417,12 @@ function handleNewPlantSubmit() {
       icon, name, wateringRequirements, sunlightRequirements, notes
     };
     postNewPlant(plantInfo);
-    // getPlants();
   });
 };
 
 function handleViewPlant() {
   // Handles viewing individual plant
   $('#plants-list').on('click', '.plant-name', function() {
-    // console.log(this);
     $(this).siblings('.plant-info').toggle();
   })
 };
@@ -529,9 +497,6 @@ function handleViewUserPlants() {
     searchedUserPlants($(this).data('username'));
     $(this).siblings('.searched-user-plants').toggle();
   });
-  $('.searched-user-plants').on('click', '.plant-name', function() {
-    $(this).siblings('.plant-info').toggle();
-  });
 };
 
 function handleMessageSubmit() {
@@ -563,7 +528,6 @@ function handleLogout() {
 $(function() {
   console.log('Welcome to your dashboard');
   showDashboard();
-  handleMenu();
   getMessages();
   handleBackButton();
   handlePlantInfoBack();
