@@ -5,6 +5,8 @@ As a new owner of numerous houseplants, I've gotten to the point where I've star
 I wanted to create a space where I could input care information about my plants to help myself keep track of them, as well as
 be able to connect with other plant owners to see and get information about their plants.
 
+Live app: https://plantcare-tracker.herokuapp.com/
+
 Front-End Technologies:
 -HTML
 -CSS
