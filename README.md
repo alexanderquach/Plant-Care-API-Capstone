@@ -33,3 +33,5 @@ Messages<br>
 Other Users and Their Plants<br>
 <img src='https://i.imgur.com/yekmN6e.png'/>
 <img src='https://i.imgur.com/LyBxCyH.png'/>
+
+Special thanks to Wojciech Kwiatek for all of his help!
