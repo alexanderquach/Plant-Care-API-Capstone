@@ -354,6 +354,8 @@ function messageUsers(message) {
   .then(responseJson => {
     console.log(`Message sent to ${message.recipient}`);
     showDashboard();
+    $('#recipient').val('');
+    $('#message').val('');
   })
   .catch(error => {
     console.log(error.message);

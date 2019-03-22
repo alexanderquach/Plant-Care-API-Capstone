@@ -22,6 +22,7 @@ header {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 #header-icon {
@@ -104,8 +105,9 @@ h1.dash-title {
 }
 
 #new-user-form, #login-form {
-  margin: 3rem 0;
+  margin: 3rem auto;
   position: relative;
+  max-width: 600px;
 }
 
 fieldset {
@@ -145,6 +147,7 @@ ul {
   display: flex;
   flex-flow: row wrap;
   position: relative;
+  justify-content: space-around;
   right: 0;
 }
 
@@ -233,7 +236,7 @@ h3.search-list {
 
 @media only screen and (min-width: 768px) {
   #user-search-button, #user-list-button, #message-button, #logout-button {
-    width: 24.5vw;
+    width: 24vw;
     margin: 0.1rem;
     background-color: rgba(153, 179, 255, 0.3);
   }
