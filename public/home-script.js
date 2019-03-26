@@ -66,7 +66,8 @@ function createNewUser(username, password) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(response.statusText);
+      console.log(response);
+      throw new Error(response.data.message);
     })
     .then(responseJson => {
       userLogin(username, password);
