@@ -3,9 +3,10 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const {app, runServer, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config');
+const {JWT_SECRET, TEST_DATABASE_URL} = require('../config');
 
 const expect = chai.expect;
 chai.use(chaiHttp);
@@ -18,9 +19,6 @@ describe('Users', function() {
   before(function() {
     return runServer(TEST_DATABASE_URL);
   });
-  // afterEach(function() {
-  //   return teardownDb();
-  // });
   after(function() {
     teardownDb();
     return closeServer();
@@ -67,9 +65,12 @@ describe('Users', function() {
     recipient: `${testUser.username}`
   }
 
+  let token = jwt.sign({testUser}, JWT_SECRET, {subject: testUser.username});
+
   it('should post a message', function() {
     return chai.request(app)
     .post('/users/messages')
+    .set('Authorization', `Bearer ${token}`)
     .send(testMessage)
     .then(function(res) {
       expect(res).to.have.status(201);
@@ -82,10 +83,11 @@ describe('Users', function() {
   it('should find user messages', function() {
     return chai.request(app)
     .get(`/users/messages/${testUser.username}`)
+    .set('Authorization', `Bearer ${token}`)
     .then(function(res) {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body).to.be.a('object');
+      expect(res.body).to.be.a('array');
     });
   });
 });

@@ -101,12 +101,17 @@ function getPlants() {
     displayPlants(responseJson);
   })
   .catch(error => {
-    console.log(error.message)
+    alert(error.message)
   });
 };
 
 function displayPlants(plants) {
   // Displays plants in dashboard
+  if (plants.length === 0) {
+    $('#plants-list').append(
+      '<li>No plants? Add a new plant by clicking the button!</li>'
+    )
+  }
   for (let i = 0; i < plants.length; i++) {
     $('#plants-list').append(
       `<li class="individual-plant">
@@ -143,11 +148,10 @@ function postNewPlant(plantInfo) {
     throw new Error(response.statusText);
   })
   .then(responseJson => {
-    console.log(responseJson);
     showDashboard();
   })
   .catch(error => {
-    console.log(error.message);
+    alert(error.message);
   })
 };
 
@@ -196,7 +200,7 @@ function editPlant(plantData, id) {
     showDashboard();
   })
   .catch(error => {
-    console.log(error.message);
+    alert(error.message);
   })
 };
 
@@ -274,7 +278,7 @@ function searchUsers(username) {
     displaySearchedUser(responseJson);
   })
   .catch(error => {
-    console.log(error.message);
+    alert(error.message);
   })
 };
 
@@ -337,6 +341,21 @@ function displaySearchedUserPlants(searchedPlants, username) {
 
 function messageUsers(message) {
   // Sends messages to other users
+  fetch(`/users/${message.recipient}`, {
+    method: 'GET',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    })
+  })
+  .then(response => {
+    if (response.length > 0) {
+      console.log(response);
+    }
+    else {
+      alert(`No user found with the name ${message.recipient}, please try again`)
+    }
+  });
   fetch('../users/messages', {
     method: 'POST',
     body: JSON.stringify(message),
@@ -391,6 +410,11 @@ function getMessages() {
 function displayUserMessages(messages) {
   // Displays user messages
   $('#message-list').empty();
+  if (messages.length === 0) {
+    $('#message-list').append(
+      '<li>No messages currently, search a user and send a message!</li>'
+    )
+  }
   for (let i = 0; i < messages.length; i++) {
     $('#message-list').append(
       `<li>

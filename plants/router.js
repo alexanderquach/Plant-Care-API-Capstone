@@ -10,12 +10,11 @@ const passport = require('passport');
 const jwtAuth = passport.authenticate('jwt', {session: false});
 
 router.get('/allPlants', jwtAuth, (req, res) => {
-  // console.log(req.user.username);
   User.findOne({username: req.user.username})
   .then(user => {
     return Plant.find({username: req.user.username})
       .then(plants => {
-        res.json(plants)
+        res.status(200).json(plants)
       });
   })
   .catch(err => {
@@ -26,7 +25,6 @@ router.get('/allPlants', jwtAuth, (req, res) => {
 });
 
 router.get('/searchedUserPlants/:username', jwtAuth, (req, res) => {
-  console.log(req, 'Random');
   Plant.find({username: req.params.username})
   .then(plants => {
     res.json(plants)
@@ -54,7 +52,6 @@ router.get('/:id', jwtAuth, (req, res) => {
 
 
 router.post('/new', jsonParser, jwtAuth, (req, res) => {
-  // console.log(req.user);
   const requiredFields = ['icon', 'name', 'wateringRequirements', 'sunlightRequirements'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -106,7 +103,6 @@ router.post('/new', jsonParser, jwtAuth, (req, res) => {
       });
     })
     .then (plant => {
-      // console.log(plant);
       return res.status(201).json(plant);
     })
     .catch(err => {
@@ -121,13 +117,6 @@ router.post('/new', jsonParser, jwtAuth, (req, res) => {
 });
 
 router.put('/:id', jsonParser, jwtAuth, (req, res) => {
-  // console.log(req.params.id, req.body.id);
-  // if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-  //   res.status(400).json({
-  //     error: 'Request path id and request body id values must match'
-  //   });
-  // }
-  
   const updated = {};
   const updateableFields = ['icon', 'name', 'wateringRequirements', 'sunlightRequirements', 'notes'];
   updateableFields.forEach(field => {
@@ -149,7 +138,7 @@ router.put('/:id', jsonParser, jwtAuth, (req, res) => {
   })
   .catch(err => {
     res.status(500).json({
-      message: 'Internal server error'
+      message: 'Internal server error, please try again'
     })
   })
 });
