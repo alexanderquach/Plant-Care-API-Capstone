@@ -15,9 +15,24 @@ function teardownDb() {
   return mongoose.connection.dropDatabase();
 }
 
+let authUser = {username: 'authUser', password: 'authpassword'};
+let token;
+
 describe('Users', function() {
   before(function() {
-    return runServer(TEST_DATABASE_URL);
+    return runServer(TEST_DATABASE_URL)
+    .then(() => 
+    chai.request(app)
+    .post('/users/signup')
+    .send(authUser)
+    .then(() => {
+      return chai.request(app)
+      .post('/auth/login')
+      .send(authUser)
+      .then((res) => {
+        token = res.body.authToken;
+      })
+    }))
   });
   after(function() {
     teardownDb();
@@ -60,12 +75,10 @@ describe('Users', function() {
   });
 
   const testMessage = {
-    username: `${testUser.username}`,
-    message: 'test message',
+    username: `${authUser.username}`,
+    messageBody: 'test message',
     recipient: `${testUser.username}`
   }
-
-  let token = jwt.sign({testUser}, JWT_SECRET, {subject: testUser.username});
 
   it('should post a message', function() {
     return chai.request(app)
@@ -76,7 +89,7 @@ describe('Users', function() {
       expect(res).to.have.status(201);
       expect(res).to.be.json;
       expect(res.body).to.be.a('object');
-      expect(res.body).to.include.keys('message', 'recipient');
+      expect(res.body).to.include.keys('messageBody', 'recipient');
     });
   });
 

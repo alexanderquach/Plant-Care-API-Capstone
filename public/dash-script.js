@@ -355,36 +355,38 @@ function messageUsers(message) {
     else {
       alert(`No user found with the name ${message.recipient}, please try again`)
     }
-  });
-  fetch('../users/messages', {
-    method: 'POST',
-    body: JSON.stringify(message),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`
-    }
   })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw new Error(response.statusText);
-  })
-  .then(responseJson => {
-    console.log(`Message sent to ${message.recipient}`);
-    showDashboard();
-    $('#recipient').val('');
-    $('#message').val('');
-  })
-  .catch(error => {
-    console.log(error.message);
-  });
+  .then(() =>
+    fetch('/users/messages', {
+      method: 'POST',
+      body: JSON.stringify(message),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then(responseJson => {
+      console.log(`Message sent to ${message.recipient}`);
+      showDashboard();
+      $('#recipient').val('');
+      $('#message').val('');
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+  )
 };
 
 function getMessages() {
   // Retrieves user messages
   const username = localStorage.getItem('username');
-  fetch('../users/messages/' + username, {
+  fetch('/users/messages/' + username, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

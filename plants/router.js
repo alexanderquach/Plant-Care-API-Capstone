@@ -30,7 +30,6 @@ router.get('/searchedUserPlants/:username', jwtAuth, (req, res) => {
     res.json(plants)
   })
   .catch(err => {
-    console.log(err)
     res.status(500).json({
       message: 'Internal server error'
     });
@@ -38,7 +37,6 @@ router.get('/searchedUserPlants/:username', jwtAuth, (req, res) => {
 });
 
 router.get('/:id', jwtAuth, (req, res) => {
-  console.log(req.params.id);
   Plant.findById(req.params.id)
   .then(plant => {
     return res.json(plant)

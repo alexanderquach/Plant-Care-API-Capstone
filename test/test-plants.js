@@ -14,24 +14,12 @@ const {Plant} = require('../plants');
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-function createTestUser() {
-  const user = {username: 'testUsername', password: 'testPassword'};
-  return User.create(user);
-};
-
-let testUser;
-let token;
-
 function seedPlantData() {
-  return createTestUser()
-    .then(function(_user) {
-      testUser = _user;
-      const seedData = [];
-      for (let i = 0; i < 10; i++) {
-        seedData.push(generatePlantData(testUser))
-      }
-      return Plants.insertMany(seedData)
-    });
+  const seedData = [];
+  for (let i = 0; i < 10; i++) {
+    seedData.push(generatePlantData())
+  }
+  return Plant.insertMany(seedData)
 };
 
 function generatePlantData() {
@@ -41,7 +29,7 @@ function generatePlantData() {
     wateringRequirements: 'test watering requirements',
     sunlightRequirements: 'test sunlight requirements',
     notes: faker.lorem.sentence(),
-    username: 'testUsername'
+    username: 'authUser'
   }
 };
 
@@ -49,11 +37,28 @@ function teardownDb() {
   return mongoose.connection.dropDatabase();
 };
 
+let authUser = {username: 'authUser', password: 'authpassword'};
+let token;
+
 describe('Plants endpoints', function() {
   before(function() {
-    seedPlantData();
-    token = jwt.sign({testUser}, JWT_SECRET, {subject: testUser.username});
-    return runServer(TEST_DATABASE_URL);
+    return runServer(TEST_DATABASE_URL)
+    .then(() => 
+      chai.request(app)
+      .post('/users/signup')
+      .send(authUser)
+      .then(() => {
+        return chai.request(app)
+        .post('/auth/login')
+        .send(authUser)
+        .then((res) => {
+          token = res.body.authToken;
+          console.log(authUser, token)
+        })
+    }))
+    .then(() => {
+      seedPlantData();
+    })
   });
   after(function() {
     teardownDb();
@@ -67,16 +72,16 @@ describe('Plants endpoints', function() {
     .then(function(res) {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res).to.be.a('array');
-      expect(res.body).to.be.a('object');
-      expect(res.body).to.include.keys('icon', 'name', 'wateringRequirements', 'sunlightRequirements')
+      expect(res).to.be.a('object');
+      expect(res.body).to.be.a('array');
+      expect(res.body[0]).to.include.keys('icon', 'name', 'wateringRequirements', 'sunlightRequirements')
     });
   });
 
   it('should post a plant', function() {
     const newPlant = generatePlantData();
     return chai.request(app)
-    .post('/new')
+    .post('/plants/new')
     .set('Authorization', `Bearer ${token}`)
     .send(newPlant)
     .then(function(res) {
@@ -107,10 +112,10 @@ describe('Plants endpoints', function() {
   });
 
   it('should delete a plant', function() {
-    let deletePlant;
+    const deletePlant = generatePlantData();
     return Plant.findOne()
     .then(function(plant){
-      deletePlant.id = plant.id;
+      deletePlant.id = plant._id;
       return chai.request(app)
       .delete(`/plants/${deletePlant.id}`)
       .set('Authorization', `Bearer ${token}`)

@@ -119,7 +119,7 @@ legend {
   text-align: center;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
   display: block;
   width: 90%;
   padding: 0.5rem 0;

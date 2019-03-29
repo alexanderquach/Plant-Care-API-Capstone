@@ -63,16 +63,19 @@ function createNewUser(username, password) {
       })
     })
     .then(response => {
-      if (response.ok) {
         return response.json();
-      }
-      console.log(response);
-      throw new Error(response.data.message);
     })
     .then(responseJson => {
-      userLogin(username, password);
+      console.log(responseJson);
+      if (responseJson.status === 200) {
+        userLogin(username, password);
+      }
+      else {
+        throw new Error(responseJson.message);
+      }
     })
     .catch(error => {
+      console.log(error);
       alert(error.message);
     })
   }
@@ -91,21 +94,6 @@ function userLogin(username, password) {
   const userInput = {
     username, password
   };
-  // fetch(`/users/${userInput.username}`, {
-  //   method: 'GET',
-  //   headers: new Headers({
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${authToken}`
-  //   })
-  // })
-  // .then(response => {
-  //   if (response.length > 0) {
-  //     console.log(response);
-  //   }
-  //   else {
-  //     alert(`No user found with the name ${userInput.username}, please try again`)
-  //   }
-  // });
   if (userInput.username === '') {
     alert('Please enter a username');
   }
