@@ -133,6 +133,12 @@ function displayPlants(plants) {
 
 function postNewPlant(plantInfo) {
   // Creates a new plant post
+  $('input:radio').prop('checked', false);
+  $('#plant-name').val('');
+  $('#plant-water').val('');
+  $('#plant-sunlight').val('');
+  $('#plant-notes').val('');
+
   fetch('/plants/new', {
     method: 'POST',
     body: JSON.stringify(plantInfo),
@@ -349,11 +355,8 @@ function messageUsers(message) {
     })
   })
   .then(response => {
-    if (response.length > 0) {
-      console.log(response);
-    }
-    else {
-      alert(`No user found with the name ${message.recipient}, please try again`)
+    if (response.length === 0) {
+      alert(`No user found with the name ${message.recipient}, please try again`);
     }
   })
   .then(() =>

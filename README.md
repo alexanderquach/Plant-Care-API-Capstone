@@ -7,6 +7,9 @@ be able to connect with other plant owners to see and get information about thei
 
 Live app: https://plantcare-tracker.herokuapp.com/
 
+Test username: username1
+Test password: password01
+
 Front-End Technologies:
 -HTML
 -CSS
