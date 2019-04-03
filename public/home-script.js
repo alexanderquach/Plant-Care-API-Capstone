@@ -66,8 +66,7 @@ function createNewUser(username, password) {
         return response.json();
     })
     .then(responseJson => {
-      console.log(responseJson);
-      if (responseJson.status === 200) {
+      if (responseJson.status === 201) {
         userLogin(username, password);
       }
       else {
@@ -78,6 +77,17 @@ function createNewUser(username, password) {
       console.log(error);
       alert(error.message);
     })
+  }
+};
+
+function newPassToggle() {
+  // Toggles visibility of login password
+  let pass = document.getElementById('password-new');
+  if (pass.type === 'password') {
+    pass.type = 'text';
+  }
+  else {
+    pass.type = 'password';
   }
 };
 
@@ -127,6 +137,17 @@ function userLogin(username, password) {
       console.log(error.message);
       alert('There was an error logging in, please enter a valid username and password to try again')
     })
+  }
+};
+
+function loginPassToggle() {
+  // Toggles visibility of login password
+  let pass = document.getElementById('password-login');
+  if (pass.type === 'password') {
+    pass.type = 'text';
+  }
+  else {
+    pass.type = 'password';
   }
 };
 
@@ -188,8 +209,26 @@ function handleLoginSubmit() {
   });
 };
 
+function handleNewPassToggle() {
+  $('#new-pass-toggle').on('click', function() {
+    newPassToggle();
+  });
+};
+
+function handleLoginPassToggle() {
+  $('#log-pass-toggle').on('click', function() {
+    loginPassToggle();
+  });
+};
+
 function handleBackButton() {
   $(document).on('click', '.back-button', function() {
+    $('#username-new').val('');
+    $('#password-new').val('');
+    document.getElementById('new-pass-toggle').checked = false;
+    $('#username-login').val('');
+    $('#password-login').val('');
+    document.getElementById('log-pass-toggle').checked = false;
     showHomepage();
   });
 };
@@ -203,5 +242,7 @@ $(function() {
   handleNewSubmit();
   handleLogin();
   handleLoginSubmit();
+  handleNewPassToggle();
+  handleLoginPassToggle();
   handleBackButton();
 });
